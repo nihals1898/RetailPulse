@@ -54,7 +54,7 @@ The Spark runner expects the Phase 7 outputs and `retailpulse.db` to exist; run 
 
 ## Verified local result
 
-The Phase 8 run used PySpark 4.2.1 with `local[*]`. It compared **461 products** to SQLite Gold with **zero mismatches** and wrote an 11-column Parquet file (23,407 bytes). The recorded run duration was **14.793 seconds** on this machine; this is a single local observation, not a benchmark or scale claim. The machine's quality checks still report the intentional source defects documented in [`data_quality.md`](data_quality.md).
+The Phase 8 run used PySpark 4.2.1 with `local[*]`. It compared **461 products** to SQLite Gold with **zero mismatches** and wrote an 11-column Parquet file (23,407 bytes). The saved run summary records **12.487 seconds** on this machine; this is a single local observation, not a benchmark or scale claim. The machine's quality checks still report the intentional source defects documented in [`data_quality.md`](data_quality.md).
 
 ## Learning note
 

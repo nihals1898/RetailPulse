@@ -102,6 +102,7 @@ Spark, Delta, and Power BI setup details and measured limitations are documented
 - [Data dictionary](docs/data_dictionary.md), [star schema](docs/data_model.md), and [quality rules](docs/data_quality.md)
 - [Ingestion](docs/ingestion.md), [SQL walkthrough](docs/sql_walkthrough.md), and [medallion exports](docs/medallion.md)
 - [Automated testing](docs/testing.md), [monitoring](docs/monitoring.md), and [performance benchmark](docs/performance.md)
+- [Consolidated final metrics](docs/final_metrics.md)
 - [Power BI model and report](docs/powerbi.md), [PySpark](docs/pyspark.md), [Delta Lake](docs/delta_lake.md), and [Databricks](docs/databricks.md)
 - [DevOps guidance](docs/devops.md), [technical decisions](docs/technical_decisions.md), and [full phase roadmap](docs/phase-0-requirements.md)
 - [GitHub portfolio checklist](docs/github_portfolio.md)

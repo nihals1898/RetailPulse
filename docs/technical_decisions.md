@@ -123,6 +123,12 @@ Initial choices and tradeoffs are recorded in [Phase 0 requirements](phase-0-req
 
 ## Phase 18 — GitHub portfolio
 
-- Review publication readiness locally without configuring a destination or publishing on the user's behalf. The repository has no initial commit or remote.
+- Perform a local publication-readiness review first. The owner then created the GitHub destination, reviewed the staged file list, committed the baseline, and pushed it to the provided remote.
 - Preserve generated data, environments, logs, and work outputs as ignored local artifacts. Treat the saved PBIX as a candidate portfolio artifact that the owner should review for personal metadata and source paths before publishing.
 - Report credential scans as limited pattern checks, not proof that every possible secret is absent.
+
+## Phase 19 — Final metrics
+
+- Derive metrics only from the latest local run summaries, the saved benchmark report, and the recorded local test result. Keep one-off pipeline/Spark/Delta timings separate from repeated benchmark results.
+- Explain that quality failures are rule-level counts over intentionally defective synthetic inputs; do not present their sum as distinct bad records.
+- State the test and cloud/hosted-CI evidence boundaries. Do not turn local observations into production-scale or cross-machine claims.
