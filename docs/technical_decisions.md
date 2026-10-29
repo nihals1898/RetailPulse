@@ -132,3 +132,9 @@ Initial choices and tradeoffs are recorded in [Phase 0 requirements](phase-0-req
 - Derive metrics only from the latest local run summaries, the saved benchmark report, and the recorded local test result. Keep one-off pipeline/Spark/Delta timings separate from repeated benchmark results.
 - Explain that quality failures are rule-level counts over intentionally defective synthetic inputs; do not present their sum as distinct bad records.
 - State the test and cloud/hosted-CI evidence boundaries. Do not turn local observations into production-scale or cross-machine claims.
+
+## Phase 20 — CV entry
+
+- Present RetailPulse as an independent project, not employment, client work, or a production deployment.
+- Limit the entry to three bullets and tie each metric to recorded local evidence. Qualify the benchmark as a Windows 11 local-sample result and distinguish intended quality failures from pipeline execution failures.
+- Keep Power BI and cloud deployment claims aligned with the saved local artifact and actual deployment status.
