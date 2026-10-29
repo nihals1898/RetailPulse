@@ -1,0 +1,1 @@
+"""Quality components for RetailPulse."""

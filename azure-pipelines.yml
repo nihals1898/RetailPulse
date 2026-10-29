@@ -1,0 +1,60 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Validate
+    displayName: Validate project
+    jobs:
+      - job: PythonValidation
+        displayName: Python 3.13 checks
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.13'
+              architecture: x64
+            displayName: Select Python 3.13
+
+          - script: |
+              python -m pip install --upgrade pip
+              python -m pip install -e ".[dev]"
+              python -m retailpulse --help
+              python -m ruff check src tests --extend-ignore E501,I001,UP017,UP035
+              python -m pytest -q
+            displayName: Install, lint, test, and check CLI
+
+  - stage: Package
+    displayName: Build and publish wheel
+    dependsOn: Validate
+    condition: succeeded()
+    jobs:
+      - job: BuildWheel
+        displayName: Build Python wheel
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.13'
+              architecture: x64
+            displayName: Select Python 3.13
+
+          - script: |
+              python -m pip install --upgrade pip
+              python -m pip install build
+              python -m build --wheel
+            displayName: Build wheel
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: dist
+              artifact: retailpulse-wheel
+              publishLocation: pipeline
+            displayName: Publish wheel artifact

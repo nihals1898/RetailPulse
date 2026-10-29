@@ -1,0 +1,94 @@
+-- RetailPulse Power BI measures
+-- Import the seven CSVs from data/processed/powerbi_model and rename tables as
+-- documented in docs/powerbi.md before adding these measures.
+
+-- Sales KPIs use completed orders only. FactSales has one row per cleaned order line.
+Total Revenue =
+CALCULATE (
+    SUM ( 'FactSales'[net_sales_amount] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Gross Sales =
+CALCULATE (
+    SUM ( 'FactSales'[gross_line_amount] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Discount Amount =
+CALCULATE (
+    SUM ( 'FactSales'[discount_amount] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Completed Orders =
+CALCULATE (
+    DISTINCTCOUNT ( 'FactSales'[order_id] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Customers Purchasing =
+CALCULATE (
+    DISTINCTCOUNT ( 'FactSales'[customer_key] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Units Sold =
+CALCULATE (
+    SUM ( 'FactSales'[quantity] ),
+    'FactSales'[order_status] = "completed"
+)
+
+Average Order Value =
+DIVIDE ( [Total Revenue], [Completed Orders] )
+
+Discount Rate =
+DIVIDE ( [Discount Amount], [Gross Sales] )
+
+Revenue Previous Month =
+CALCULATE (
+    [Total Revenue],
+    DATEADD ( 'DimDate'[date_value], -1, MONTH )
+)
+
+Revenue Month-over-Month Change =
+[Total Revenue] - [Revenue Previous Month]
+
+Revenue Month-over-Month Growth =
+DIVIDE ( [Revenue Month-over-Month Change], [Revenue Previous Month] )
+
+-- Return date is the active date role for FactReturns.
+Return Events =
+DISTINCTCOUNT ( 'FactReturns'[return_id] )
+
+Units Returned =
+SUM ( 'FactReturns'[return_quantity] )
+
+Refund Amount =
+SUM ( 'FactReturns'[refund_amount] )
+
+-- This cohort measure attributes returns to the original sales order date.
+Units Returned by Order Date =
+CALCULATE (
+    [Units Returned],
+    CROSSFILTER (
+        'DimDate'[date_key],
+        'FactReturns'[return_date_key],
+        NONE
+    ),
+    USERELATIONSHIP (
+        'DimDate'[date_key],
+        'FactReturns'[order_date_key]
+    )
+)
+
+Return Rate by Order Date =
+DIVIDE ( [Units Returned by Order Date], [Units Sold] )
+
+-- Inventory is a snapshot. Use this measure at one selected snapshot date;
+-- summing it across multiple dates would double-count stock over time.
+Inventory Value at Selected Snapshot =
+SUM ( 'FactInventory'[inventory_value] )
+
+Units on Hand at Selected Snapshot =
+SUM ( 'FactInventory'[on_hand_quantity] )

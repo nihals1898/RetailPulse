@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+logs/
+
+# Local secrets and environment-specific configuration
+.env
+.env.*
+!.env.example
+
+# Generated data (keep directory placeholders only)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/quarantine/*
+!data/quarantine/.gitkeep
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary local verification artifacts
+work/
+dashboards/powerbi/RetailPulse.pbix

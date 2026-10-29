@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retailpulse-data-platform"
+version = "0.1.0"
+description = "Local-first retail data engineering and analytics learning project"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "pandas>=2.2,<4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0,<10.0",
+    "ruff>=0.11,<1.0",
+]
+spark = [
+    "pandas>=2.2,<3.0",
+    "pyspark==4.2.1",
+    "pyarrow>=18.0",
+]
+delta = [
+    "deltalake==1.6.6",
+    "pyarrow>=21.0",
+]
+
+[project.scripts]
+retailpulse-generate = "retailpulse.generation:main"
+retailpulse-ingest = "retailpulse.ingestion.framework:main"
+retailpulse-validate = "retailpulse.quality.engine:main"
+retailpulse-sql = "retailpulse.sql_pipeline:main"
+retailpulse-spark = "retailpulse.spark_pipeline:main"
+retailpulse-delta = "retailpulse.delta_pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
